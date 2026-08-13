@@ -1,2 +1,2 @@
 # Monitoro
-A simple network scanning and monitoring tool
+A simple network scanning/mapping/monitoring tool
