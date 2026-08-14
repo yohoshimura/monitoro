@@ -98,7 +98,7 @@ impl TargetSet {
     /// Vrai si la cible relève d'un réseau privé, de la boucle locale ou du
     /// lien-local.
     ///
-    /// Monitoro est un outil d'administration de son propre réseau : scanner
+    /// monitoro est un outil d'administration de son propre réseau : scanner
     /// hors de ces plages est légitime mais mérite un avertissement visible.
     pub fn is_private(&self) -> bool {
         let addr = self.net.network();

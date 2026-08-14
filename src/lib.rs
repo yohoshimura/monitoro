@@ -1,4 +1,4 @@
-//! Monitoro — découverte et inventaire du réseau local.
+//! monitoro — découverte et inventaire du réseau local.
 //!
 //! L'organisation suit le flux de données :
 //!

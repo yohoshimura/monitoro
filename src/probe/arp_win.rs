@@ -1,6 +1,6 @@
 //! Sonde ARP via l'API IP Helper de Windows.
 //!
-//! C'est le cœur de Monitoro. `SendARP` résout une adresse IPv4 en adresse
+//! C'est le cœur de monitoro. `SendARP` résout une adresse IPv4 en adresse
 //! matérielle **sans aucun privilège** et sans pilote de capture : la fonction
 //! demande à la pile du système d'émettre la requête ARP à notre place.
 //!

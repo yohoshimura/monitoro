@@ -1,4 +1,4 @@
-# Monitoro
+# monitoro
 
 Découverte et inventaire du réseau local, en Rust — **sans droits administrateur
 et sans rien installer**.
@@ -82,7 +82,7 @@ le binaire — aucune requête réseau à l'exécution.
   d'une zone DNS inverse ou de LLMNR, souvent absentes ou désactivées sur un
   réseau domestique. La colonne reste alors vide.
 - **Une MAC randomisée n'a pas de constructeur.** Les appareils mobiles
-  changent d'adresse d'un réseau à l'autre ; Monitoro l'indique explicitement
+  changent d'adresse d'un réseau à l'autre ; monitoro l'indique explicitement
   plutôt que d'afficher « inconnu ».
 - **Registre IEEE partiel.** Seules les assignations MA-L (préfixes /24) sont
   embarquées, soit la quasi-totalité des cas. Les plages MA-M et MA-S, publiées
