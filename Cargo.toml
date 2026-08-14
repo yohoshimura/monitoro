@@ -1,0 +1,34 @@
+[package]
+name = "monitoro"
+version = "0.1.0"
+edition = "2024"
+description = "A simple network scanning/mapping/monitoring tool"
+license = "MIT"
+readme = "README.md"
+
+[lib]
+name = "monitoro"
+path = "src/lib.rs"
+
+[[bin]]
+name = "monitoro"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.104"
+async-trait = "0.1.92"
+clap = { version = "4.6.6", features = ["derive"] }
+dns-lookup = "3.0.1"
+ipnet = "2.12.1"
+netdev = "0.46.0"
+ratatui = "0.30.2"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.151"
+thiserror = "2.0.20"
+tokio = { version = "1.53.1", features = ["rt-multi-thread", "macros", "net", "time", "sync"] }
+
+[target."cfg(windows)".dependencies]
+windows = { version = "0.62.2", features = ["Win32_NetworkManagement_IpHelper"] }
+
+[build-dependencies]
+csv = "1.4.0"
