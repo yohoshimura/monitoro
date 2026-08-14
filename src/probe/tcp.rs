@@ -193,10 +193,10 @@ mod tests {
     async fn un_port_ferme_prouve_quand_meme_que_l_hote_existe() {
         // Le cœur de cette sonde : un `RST` est une preuve de vie.
         //
-        // Ce test valide un comportement du système, pas du code : certaines
-        // configurations de pare-feu (dont celle de la machine de développement)
-        // ignorent silencieusement les paquets au lieu de les refuser, y compris
-        // sur la boucle locale. On y obtient alors `Unknown`, ce qui est correct.
+        // Ce test valide un comportement du système, pas du code : bien des
+        // configurations de pare-feu ignorent silencieusement les paquets au
+        // lieu de les refuser, y compris sur la boucle locale. On obtient
+        // alors `Unknown`, ce qui est le résultat correct.
         // La logique de classification elle-même est couverte sans réseau par
         // `seul_un_refus_de_connexion_vaut_preuve_de_vie`.
         let port = closed_port().await;

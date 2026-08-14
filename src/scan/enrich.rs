@@ -70,8 +70,8 @@ mod tests {
     use super::*;
 
     const IP: Ipv4Addr = Ipv4Addr::new(192, 168, 1, 42);
-    const MAC_APPLE: MacAddr = MacAddr::new([0x3C, 0x22, 0xFB, 0x01, 0x02, 0x03]);
-    const MAC_RANDOMISEE: MacAddr = MacAddr::new([0xDA, 0x22, 0xFB, 0x01, 0x02, 0x03]);
+    const MAC_DOC: MacAddr = MacAddr::new([0x00, 0x00, 0x5E, 0x00, 0x53, 0x01]);
+    const MAC_RANDOMISEE: MacAddr = MacAddr::new([0x02, 0x00, 0x5E, 0x00, 0x53, 0x01]);
 
     #[test]
     fn une_adresse_textuelle_n_est_pas_un_nom() {
@@ -85,15 +85,12 @@ mod tests {
 
     #[tokio::test]
     async fn le_constructeur_est_deduit_de_la_mac() {
-        let host = enrich(IP, Some(MAC_APPLE), false)
+        let host = enrich(IP, Some(MAC_DOC), false)
             .await
             .expect("le constructeur devait suffire à produire un enrichissement");
 
         assert!(
-            host.vendor
-                .and_then(|v| v.name())
-                .unwrap()
-                .contains("Apple"),
+            host.vendor.and_then(|v| v.name()).unwrap().contains("IANA"),
             "constructeur inattendu : {:?}",
             host.vendor
         );
@@ -117,7 +114,7 @@ mod tests {
     async fn l_enrichissement_ne_fabrique_que_les_champs_manquants() {
         // Le résultat sert à être fusionné : il ne doit pas réintroduire de
         // valeurs par défaut susceptibles d'écraser ce qui est déjà connu.
-        let host = enrich(IP, Some(MAC_APPLE), false).await.unwrap();
+        let host = enrich(IP, Some(MAC_DOC), false).await.unwrap();
 
         assert_eq!(host.mac, None);
         assert!(host.open_ports.is_empty());

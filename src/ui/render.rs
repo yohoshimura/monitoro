@@ -234,14 +234,14 @@ mod tests {
 
         app.apply(ScanEvent::Started { total: 254 });
         app.apply(ScanEvent::HostFound(Host {
-            mac: Some(MacAddr::new([0x3C, 0x22, 0xFB, 0x01, 0x02, 0x03])),
-            vendor: Some(Vendor::Known("Apple, Inc.")),
+            mac: Some(MacAddr::new([0x00, 0x00, 0x5E, 0x00, 0x53, 0x01])),
+            vendor: Some(Vendor::Known("Exemple SA")),
             hostname: Some("portable".to_owned()),
             open_ports: vec![22, 443],
             ..Host::new(Ipv4Addr::new(192, 168, 1, 10))
         }));
         app.apply(ScanEvent::HostFound(Host {
-            mac: Some(MacAddr::new([0xDA, 0x22, 0xFB, 0x01, 0x02, 0x03])),
+            mac: Some(MacAddr::new([0x02, 0x00, 0x5E, 0x00, 0x53, 0x01])),
             vendor: Some(Vendor::Randomized),
             ..Host::new(Ipv4Addr::new(192, 168, 1, 77))
         }));
@@ -268,8 +268,8 @@ mod tests {
 
         assert!(rendu.contains("ADRESSE"), "en-tête du tableau absent");
         assert!(rendu.contains("192.168.1.10"));
-        assert!(rendu.contains("3C:22:FB:01:02:03"));
-        assert!(rendu.contains("Apple, Inc."));
+        assert!(rendu.contains("00:00:5E:00:53:01"));
+        assert!(rendu.contains("Exemple SA"));
         assert!(rendu.contains("portable"));
         assert!(rendu.contains("22,443"));
     }

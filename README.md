@@ -10,7 +10,7 @@ ADRESSE          MAC                CONSTRUCTEUR             NOM        PORTS
 192.168.1.12     00:00:5E:00:53:0C  (constructeur)           -          80
 192.168.1.24     00:00:5E:00:53:18  (constructeur)           nas        80,443,445
 192.168.1.37     00:00:5E:00:53:25  (constructeur)           -          9100
-192.168.1.58     8A:1F:C4:6D:90:E2  (MAC randomisée)         -          -
+192.168.1.58     02:00:5E:00:53:3A  (MAC randomisée)         -          -
 ████████████████████████░░░░░░░░  254/254 · 20 hôte(s) · 8.9s · terminé
 q quitter · s tri (adresse) · / filtrer · ↑↓ naviguer
 ```
@@ -63,8 +63,8 @@ Deux sondes complémentaires, appliquées à chaque adresse.
 résoudre une adresse IPv4 en adresse matérielle. C'est la sonde décisive : un
 appareil qui n'expose aucun service — téléphone, caméra, imprimante en veille —
 reste invisible à un balayage de ports, mais **doit** répondre à ARP pour
-communiquer sur le lien. Sur un réseau de test, ARP a trouvé 20 hôtes là où TCP
-seul en voyait 12.
+communiquer sur le lien. C'est ce qui sépare un inventaire d'une simple liste de
+services.
 
 **TCP** tente une connexion sur quelques ports courants. Détail qui compte : un
 refus de connexion (`RST`) prouve l'existence de l'hôte tout autant qu'une
@@ -87,10 +87,11 @@ le binaire — aucune requête réseau à l'exécution.
 - **Registre IEEE partiel.** Seules les assignations MA-L (préfixes /24) sont
   embarquées, soit la quasi-totalité des cas. Les plages MA-M et MA-S, publiées
   séparément par l'IEEE, retombent sur « inconnu ».
-- **Proxys transparents.** Sur certains réseaux, un intermédiaire accepte les
-  connexions vers les ports 80 et 443 à la place de la destination, ce qui peut
-  faire passer une adresse *routée* pour vivante. Le sous-réseau local, joint
-  directement, n'est pas concerné.
+- **La sonde TCP peut être trompée hors du lien local.** Un intermédiaire qui
+  accepte les connexions à la place de la destination — proxy transparent,
+  portail captif — ferait passer une adresse *routée* pour vivante. Le
+  sous-réseau local, joint directement sans passer par une passerelle, n'est
+  pas concerné, et la sonde ARP ne l'est jamais.
 
 ## Mettre à jour le registre des constructeurs
 

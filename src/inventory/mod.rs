@@ -164,7 +164,7 @@ mod tests {
     use super::*;
 
     const IP: Ipv4Addr = Ipv4Addr::new(192, 168, 1, 10);
-    const MAC: MacAddr = MacAddr::new([0x3C, 0x22, 0xFB, 0x01, 0x02, 0x03]);
+    const MAC: MacAddr = MacAddr::new([0x00, 0x00, 0x5E, 0x00, 0x53, 0x01]);
 
     fn host_with_mac() -> Host {
         Host {
@@ -272,7 +272,7 @@ mod tests {
     #[test]
     fn une_mac_randomisee_est_signalee_au_niveau_de_l_hote() {
         let randomisee = Host {
-            mac: Some(MacAddr::new([0xDA, 0x22, 0xFB, 0, 0, 1])),
+            mac: Some(MacAddr::new([0x02, 0x00, 0x5E, 0x00, 0x53, 0x01])),
             ..Host::new(IP)
         };
 

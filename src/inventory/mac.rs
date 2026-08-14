@@ -105,25 +105,25 @@ impl serde::Serialize for MacAddr {
 mod tests {
     use super::*;
 
-    const APPLE: MacAddr = MacAddr::new([0x3C, 0x22, 0xFB, 0x01, 0x02, 0x03]);
+    const DOC_MAC: MacAddr = MacAddr::new([0x00, 0x00, 0x5E, 0x00, 0x53, 0x01]);
 
     #[test]
     fn l_affichage_est_en_majuscules_separees_par_deux_points() {
-        assert_eq!(APPLE.to_string(), "3C:22:FB:01:02:03");
+        assert_eq!(DOC_MAC.to_string(), "00:00:5E:00:53:01");
     }
 
     #[test]
     fn les_notations_courantes_sont_toutes_acceptees() {
         for input in [
-            "3C:22:FB:01:02:03",
-            "3c:22:fb:01:02:03",
-            "3C-22-FB-01-02-03",
-            "3c22fb010203",
-            "  3C:22:FB:01:02:03  ",
+            "00:00:5E:00:53:01",
+            "00:00:5e:00:53:01",
+            "00-00-5E-00-53-01",
+            "00005e005301",
+            "  00:00:5E:00:53:01  ",
         ] {
             assert_eq!(
                 input.parse::<MacAddr>().unwrap(),
-                APPLE,
+                DOC_MAC,
                 "échec sur {input}"
             );
         }
@@ -133,10 +133,10 @@ mod tests {
     fn une_notation_incoherente_est_rejetee() {
         for input in [
             "",
-            "3C:22:FB:01:02",       // trop court
-            "3C:22:FB:01:02:03:04", // trop long
-            "3C:22:FB:01:02:ZZ",    // pas hexadécimal
-            "3C:22FB:01:02:03",     // séparateurs incohérents
+            "00:00:5E:00:53",       // trop court
+            "00:00:5E:00:53:01:02", // trop long
+            "00:00:5E:00:53:ZZ",    // pas hexadécimal
+            "00:005E:00:53:01",     // séparateurs incohérents
         ] {
             assert!(
                 input.parse::<MacAddr>().is_err(),
@@ -147,12 +147,12 @@ mod tests {
 
     #[test]
     fn l_analyse_est_l_inverse_de_l_affichage() {
-        assert_eq!(APPLE.to_string().parse::<MacAddr>().unwrap(), APPLE);
+        assert_eq!(DOC_MAC.to_string().parse::<MacAddr>().unwrap(), DOC_MAC);
     }
 
     #[test]
     fn le_prefixe_oui_reprend_les_trois_premiers_octets() {
-        assert_eq!(APPLE.oui(), 0x3C_22_FB);
+        assert_eq!(DOC_MAC.oui(), 0x00_00_5E);
     }
 
     #[test]
@@ -160,25 +160,25 @@ mod tests {
         // 0x02 : deuxième bit de poids faible du premier octet.
         assert!(MacAddr::new([0x02, 0, 0, 0, 0, 0]).is_locally_administered());
         assert!(MacAddr::new([0xDA, 0, 0, 0, 0, 0]).is_locally_administered());
-        assert!(!APPLE.is_locally_administered());
+        assert!(!DOC_MAC.is_locally_administered());
     }
 
     #[test]
     fn le_bit_de_diffusion_groupee_est_distinct_du_precedent() {
         assert!(MacAddr::new([0x01, 0, 0, 0, 0, 0]).is_multicast());
         assert!(!MacAddr::new([0x02, 0, 0, 0, 0, 0]).is_multicast());
-        assert!(!APPLE.is_multicast());
+        assert!(!DOC_MAC.is_multicast());
     }
 
     #[test]
     fn l_adresse_nulle_est_reconnue() {
         assert!(MacAddr::ZERO.is_zero());
-        assert!(!APPLE.is_zero());
+        assert!(!DOC_MAC.is_zero());
     }
 
     #[test]
     fn la_serialisation_json_produit_une_chaine() {
-        let json = serde_json::to_string(&APPLE).unwrap();
-        assert_eq!(json, "\"3C:22:FB:01:02:03\"");
+        let json = serde_json::to_string(&DOC_MAC).unwrap();
+        assert_eq!(json, "\"00:00:5E:00:53:01\"");
     }
 }

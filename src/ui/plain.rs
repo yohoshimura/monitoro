@@ -114,8 +114,8 @@ mod tests {
     fn chaque_hote_occupe_une_ligne_avec_ses_informations() {
         let mut inventory = Inventory::new();
         inventory.upsert(Host {
-            mac: Some("3C:22:FB:01:02:03".parse().unwrap()),
-            vendor: Some(Vendor::Known("Apple, Inc.")),
+            mac: Some("00:00:5E:00:53:01".parse().unwrap()),
+            vendor: Some(Vendor::Known("Exemple SA")),
             hostname: Some("portable".to_owned()),
             open_ports: vec![22, 443],
             ..Host::new(Ipv4Addr::new(192, 168, 1, 42))
@@ -127,8 +127,8 @@ mod tests {
             .find(|l| l.starts_with("192.168.1.42"))
             .expect("la ligne de l'hôte est absente");
 
-        assert!(ligne.contains("3C:22:FB:01:02:03"));
-        assert!(ligne.contains("Apple, Inc."));
+        assert!(ligne.contains("00:00:5E:00:53:01"));
+        assert!(ligne.contains("Exemple SA"));
         assert!(ligne.contains("portable"));
         assert!(ligne.contains("22,443"));
     }

@@ -87,17 +87,20 @@ mod tests {
 
     #[test]
     fn un_prefixe_du_registre_est_retrouve() {
-        // 3C:22:FB est enregistré par Apple.
-        let vendor = lookup("3C:22:FB:00:00:01".parse().unwrap());
+        // 00:00:5E appartient à l'IANA, qui y réserve la plage
+        // 00:00:5E:00:53:00–FF aux exemples de documentation (RFC 7042).
+        // Doublement pratique ici : l'adresse est à la fois publiable et
+        // réellement présente dans le registre.
+        let vendor = lookup("00:00:5E:00:53:01".parse().unwrap());
         let name = vendor.name().expect("préfixe attendu dans le registre");
-        assert!(name.contains("Apple"), "constructeur inattendu : {name}");
+        assert!(name.contains("IANA"), "constructeur inattendu : {name}");
     }
 
     #[test]
     fn une_adresse_randomisee_n_est_pas_cherchee_dans_le_registre() {
         // Bit localement administré positionné : le préfixe ne veut rien dire,
         // même s'il coïncide avec une entrée du registre.
-        let vendor = lookup("DA:22:FB:00:00:01".parse().unwrap());
+        let vendor = lookup("02:00:5E:00:53:01".parse().unwrap());
 
         assert_eq!(vendor, Vendor::Randomized);
         assert!(vendor.is_randomized());

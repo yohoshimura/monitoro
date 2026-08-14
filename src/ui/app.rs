@@ -228,7 +228,7 @@ mod tests {
 
     fn host(last: u8, vendor: Option<&'static str>, ports: Vec<u16>) -> Host {
         Host {
-            mac: Some(MacAddr::new([0x3C, 0x22, 0xFB, 0, 0, last])),
+            mac: Some(MacAddr::new([0x00, 0x00, 0x5E, 0x00, 0x53, last])),
             vendor: vendor.map(Vendor::Known),
             open_ports: ports,
             ..Host::new(Ipv4Addr::new(192, 168, 1, last))
@@ -238,8 +238,8 @@ mod tests {
     fn app_avec_hotes() -> AppState {
         let mut app = AppState::new("192.168.1.0/24".to_owned(), None);
         for host in [
-            host(30, Some("Zyxel"), vec![80]),
-            host(10, Some("Apple"), vec![22, 80, 443]),
+            host(30, Some("Zeta SARL"), vec![80]),
+            host(10, Some("Alpha SA"), vec![22, 80, 443]),
             host(20, None, vec![]),
         ] {
             app.apply(ScanEvent::HostFound(host));
@@ -335,7 +335,7 @@ mod tests {
             ..Host::new(Ipv4Addr::new(192, 168, 1, 20))
         }));
 
-        app.filter = "apple".to_owned();
+        app.filter = "alpha".to_owned();
         assert_eq!(adresses(&app), vec![10], "filtre par constructeur");
 
         app.filter = "1.30".to_owned();
@@ -344,7 +344,7 @@ mod tests {
         app.filter = "imprim".to_owned();
         assert_eq!(adresses(&app), vec![20], "filtre par nom");
 
-        app.filter = "3c:22".to_owned();
+        app.filter = "00:00:5e".to_owned();
         assert_eq!(
             adresses(&app).len(),
             3,
@@ -359,15 +359,15 @@ mod tests {
         app.on_key(key(KeyCode::Char('/')));
         assert!(app.editing_filter);
 
-        for c in "apple".chars() {
+        for c in "alpha".chars() {
             app.on_key(key(KeyCode::Char(c)));
         }
         app.on_key(key(KeyCode::Backspace));
-        assert_eq!(app.filter, "appl");
+        assert_eq!(app.filter, "alph");
 
         app.on_key(key(KeyCode::Enter));
         assert!(!app.editing_filter, "Entrée quitte la saisie");
-        assert_eq!(app.filter, "appl", "et conserve le filtre");
+        assert_eq!(app.filter, "alph", "et conserve le filtre");
 
         app.on_key(key(KeyCode::Char('/')));
         app.on_key(key(KeyCode::Esc));
@@ -413,7 +413,7 @@ mod tests {
         assert_eq!(app.selected, 2);
 
         app.on_key(key(KeyCode::Char('/')));
-        for c in "apple".chars() {
+        for c in "alpha".chars() {
             app.on_key(key(KeyCode::Char(c)));
         }
 

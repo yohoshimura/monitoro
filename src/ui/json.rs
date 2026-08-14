@@ -96,8 +96,8 @@ mod tests {
     #[test]
     fn le_rapport_expose_les_champs_attendus() {
         let host = Host {
-            mac: Some("3C:22:FB:01:02:03".parse().unwrap()),
-            vendor: Some(Vendor::Known("Apple, Inc.")),
+            mac: Some("00:00:5E:00:53:01".parse().unwrap()),
+            vendor: Some(Vendor::Known("Exemple SA")),
             hostname: Some("portable".to_owned()),
             open_ports: vec![22, 443],
             rtt: Some(Duration::from_millis(4)),
@@ -113,8 +113,8 @@ mod tests {
 
         let host = &json["hosts"][0];
         assert_eq!(host["ip"], "192.168.1.42");
-        assert_eq!(host["mac"], "3C:22:FB:01:02:03");
-        assert_eq!(host["vendor"], "Apple, Inc.");
+        assert_eq!(host["mac"], "00:00:5E:00:53:01");
+        assert_eq!(host["vendor"], "Exemple SA");
         assert_eq!(host["mac_randomized"], false);
         assert_eq!(host["hostname"], "portable");
         assert_eq!(host["open_ports"][1], 443);
@@ -142,7 +142,7 @@ mod tests {
     #[test]
     fn une_mac_randomisee_est_signalee_sans_constructeur() {
         let host = Host {
-            mac: Some("DA:22:FB:01:02:03".parse().unwrap()),
+            mac: Some("02:00:5E:00:53:01".parse().unwrap()),
             vendor: Some(Vendor::Randomized),
             ..Host::new(Ipv4Addr::new(192, 168, 1, 9))
         };
